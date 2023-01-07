@@ -13,7 +13,6 @@ def synthetic_latency(delay: float = 0.1):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            print(f"Simulating {delay} seconds latency...")
             sleep(delay)
             return func(*args, **kwargs)
 
@@ -32,7 +31,6 @@ def unstable(rate: float = 0.1):
         @wraps(func)
         def wrapper(*args, **kwargs):
             if random.random() < rate:
-                print("Simulating an unstable function...")
                 raise Exception("Unstable function failed")
             return func(*args, **kwargs)
 

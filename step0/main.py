@@ -1,6 +1,5 @@
 import threading
 from time import sleep
-from step0.helpers import retry
 
 from step0.simulations import (
     build_image,
@@ -16,14 +15,27 @@ from step0.simulations import (
 def main():
     tag = "1.0.0"
 
+    print("Checking out code...")
     checkout_code()
 
-    with retry(3, 2):
-        build_image(tag)
-    # with retry(2, 2):
-    #     deploy_image(tag, "staging")
+    max_attempts = 3
+    attempt = 0
+    print(f"Building image with tag {tag}...")
+    while attempt < max_attempts:
+        try:
+            build_image(tag)
+            break
+        except Exception:
+            attempt += 1
+            print(f"Caught an exception ({attempt}), retrying...")
+            sleep(2)
+    else:
+        raise Exception("Failed to build image")
+
+    print(f"Deploying image with tag {tag} to staging...")
     deploy_image(tag, "staging")
 
+    print("Waiting 10 minutes for metrics to stabilize...")
     sleep(600)
 
     if check_metrics():

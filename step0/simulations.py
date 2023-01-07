@@ -3,19 +3,18 @@ from step0.helpers import synthetic_latency, unstable
 
 @synthetic_latency(delay=2)
 def checkout_code() -> None:
-    print("Checking out code...")
+    print("Code checked out")
 
 
 @synthetic_latency(delay=5)
 @unstable(rate=0.6)
 def build_image(tag: str) -> None:
-    print(f"Building image with tag {tag}...")
+    print(f"Image with tag {tag} built")
 
 
 @synthetic_latency(delay=10)
-# @unstable(rate=0.1)
 def deploy_image(tag: str, env: str) -> None:
-    print(f"Deploying image with tag {tag} to {env}...")
+    print(f"Image with tag {tag} deployed successfully to {env}...")
 
 
 @synthetic_latency(delay=1)

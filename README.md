@@ -17,7 +17,6 @@ J(Notify Failed Deploy)
 
 A --> B --> C -->|After 10 Minutes| D --> E -->|YES| F
 B -->|Retry 3 times| B
-C -->|Retry 2 times| C
 E -->|NO| G
 G --> J
 F --> H
