@@ -34,8 +34,8 @@ async def main():
     print(f"Deploying image with tag {tag} to staging...")
     await deploy_image(tag, "staging")
 
-    print("Waiting 10 minutes before checking metrics...")
-    await asyncio.sleep(600)
+    print("Waiting 3 minutes before checking metrics...")
+    await asyncio.sleep(180)
 
     if await check_metrics():
         print(f"Deploying image with tag {tag} to production...")
