@@ -1,4 +1,5 @@
 import asyncio
+from datetime import timedelta
 import random
 import string
 from temporalio import workflow
@@ -33,7 +34,9 @@ class CICDWorkflow:
 
         workflow.logger.info(f"Deploying image with tag {tag} to staging...")
         await workflow.execute_activity(
-            deploy_image, DeployContext(tag=tag, env="staging")
+            deploy_image,
+            DeployContext(tag=tag, env="staging"),
+            start_to_close_timeout=timedelta(minutes=2),
         )
 
         workflow.logger.info("Waiting 3 minutes before checking metrics...")

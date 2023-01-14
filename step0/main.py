@@ -33,7 +33,7 @@ def main():
         raise Exception("Failed to build image")
 
     print(f"Deploying image with tag {tag} to staging...")
-    deploy_image(tag, "staging")
+    deploy_image(tag, "staging")  # 2 minutes timeout
 
     print("Waiting 10 minutes for metrics to stabilize...")
     sleep(600)

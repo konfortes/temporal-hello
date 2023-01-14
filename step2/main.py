@@ -32,7 +32,11 @@ async def main():
         raise Exception("Failed to build image")
 
     print(f"Deploying image with tag {tag} to staging...")
-    await deploy_image(tag, "staging")
+    try:
+        await asyncio.wait_for(deploy_image(tag, "staging"), 120)
+    except TimeoutError:
+        print("Deploy to staging timed out. Aborting...")
+        return
 
     print("Waiting 3 minutes before checking metrics...")
     await asyncio.sleep(180)
